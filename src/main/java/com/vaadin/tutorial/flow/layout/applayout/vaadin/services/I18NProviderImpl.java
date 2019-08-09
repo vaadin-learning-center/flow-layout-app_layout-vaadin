@@ -20,7 +20,7 @@ public class I18NProviderImpl implements I18NProvider, HasLogger {
   public static final String EMPTY_KEY = "###-EMPTY-KEY-###";
 
   public I18NProviderImpl() {
-    logger().info("I18NProviderImpl02 was found..");
+    logger().info("I18NProviderImpl was found..");
   }
 
 

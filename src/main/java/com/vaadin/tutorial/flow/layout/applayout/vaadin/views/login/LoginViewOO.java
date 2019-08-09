@@ -44,6 +44,13 @@ public class LoginViewOO extends Composite<HorizontalLayout> implements HasLogge
 
   public static final String NAV_LOGIN_VIEW = "login";
 
+
+  public static final String USERNAME       = "username";
+  public static final String PASSWORD       = "password";
+  public static final String BTN_LOGIN      = "btnLogin";
+  public static final String BTN_CANCEL     = "btnCancel";
+
+
   private final TextField username = new TextField();
   private final PasswordField password = new PasswordField();
   private final Checkbox rememberMe = new Checkbox();
@@ -64,10 +71,21 @@ public class LoginViewOO extends Composite<HorizontalLayout> implements HasLogge
 
 
     //I18N
+    username.setId(USERNAME);
     username.setPlaceholder(getTranslation("login.username.placeholder"));
+    username.setValue("admin");
+
+    password.setId(PASSWORD);
     password.setPlaceholder(getTranslation("login.password.placeholder"));
+    password.setValue("admin");
+
+
     rememberMe.setLabel(getTranslation("login.rememberme.label"));
+
+    btnLogin.setId(BTN_LOGIN);
     btnLogin.setText(getTranslation("login.button.ok.text"));
+
+    btnCancel.setId(BTN_CANCEL);
     btnCancel.setText(getTranslation("login.button.cancel.text"));
 
     HorizontalLayout content = getContent();

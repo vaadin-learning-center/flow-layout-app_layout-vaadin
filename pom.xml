@@ -20,11 +20,17 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.vaadin-learning-center.vaadin-dependencies</groupId>
+    <artifactId>vaadin-dependencies-v14</artifactId>
+    <!--    latest version you could fine here:-->
+    <!--    https://jitpack.io/#vaadin-learning-center/vaadin-dependencies/-->
+    <version>d17d0e9e</version>
+  </parent>
 
   <groupId>com.vaadin.tutorial</groupId>
   <artifactId>flow-layout-app_layout-vaadin</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-
 
   <packaging>jar</packaging>
 
@@ -71,29 +77,16 @@
   </licenses>
 
   <properties>
-    <!--technical-->
-    <!--<maven.compiler.release>10</maven.compiler.release>-->
-    <maven.compiler.target>8</maven.compiler.target>
-    <maven.compiler.source>8</maven.compiler.source>
-
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <!--RapidPM-->
-    <rapidpm-logger-adapter.version>01.00.01-RPM</rapidpm-logger-adapter.version>
-    <rapidpm-functional-reactive.version>01.00.02-RPM</rapidpm-functional-reactive.version>
-
-    <!--Vaadin-->
-    <vaadin.version>13.0.2</vaadin.version>
-    <meecrowave.version>1.2.7</meecrowave.version>
-
+    <jdk.version>1.8</jdk.version>
+    <!--    <jetty.version>9.4.19.v20190610</jetty.version>-->
+    <byte-buddy.version>1.10.0</byte-buddy.version>
   </properties>
+
 
   <repositories>
     <repository>
-      <id>vaadin-addons</id>
-      <url>http://maven.vaadin.com/vaadin-addons</url>
-      <!--<url>http://maven.vaadin.com/</url>-->
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
 
@@ -115,7 +108,7 @@
       <dependency>
         <groupId>com.vaadin</groupId>
         <artifactId>vaadin-bom</artifactId>
-        <version>${vaadin.version}</version>
+        <version>${vaadin-v14.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -124,36 +117,10 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.rapidpm</groupId>
-      <artifactId>rapidpm-logger-adapter</artifactId>
-      <version>${rapidpm-logger-adapter.version}</version>
+      <groupId>com.github.vaadin-learning-center.vaadin-dependencies</groupId>
+      <artifactId>vaadin-dependencies-nano-jetty</artifactId>
+      <version>d17d0e9e</version>
     </dependency>
-    <dependency>
-      <groupId>org.rapidpm</groupId>
-      <artifactId>rapidpm-functional-reactive</artifactId>
-      <version>${rapidpm-functional-reactive.version}</version>
-    </dependency>
-
-    <!--Infrastructure-->
-    <dependency>
-      <groupId>org.apache.meecrowave</groupId>
-      <artifactId>meecrowave-core</artifactId>
-      <version>${meecrowave.version}</version>
-      <scope>compile</scope>
-    </dependency>
-
-
-    <!--Vaadin -->
-    <dependency>
-      <groupId>com.vaadin</groupId>
-      <artifactId>vaadin</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.vaadin</groupId>
-      <artifactId>vaadin-lumo-theme</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -162,56 +129,73 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>${byte-buddy.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.vaadin</groupId>
+      <artifactId>vaadin-testbench</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-server</artifactId>
+        </exclusion>
+      </exclusions>
+
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>selenium</artifactId>
+      <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-chrome-driver</artifactId>
+      <version>3.141.59</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>3.1.0</version>
-      </plugin>
-
-      <plugin>
-        <!--
-          With this plugin you can start the container..:
-          $> mvn clean install meecrowave:run
-          for debugging:
-          $> mvnDebug meecrowave:run
-        -->
-        <groupId>org.apache.meecrowave</groupId>
-        <artifactId>meecrowave-maven-plugin</artifactId>
-        <version>${meecrowave.version}</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
+        <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.1</version>
-        <configuration>
-          <!-- das brauchts leider, sonst muessen wir ein web.xml tippen... -->
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>vaadin-app</finalName>
+              <transformers>
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>org.vaadin.tutorial.nano.jetty.NanoVaadin</Main-Class>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

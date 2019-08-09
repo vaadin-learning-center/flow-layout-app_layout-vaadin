@@ -1,7 +1,10 @@
 package com.vaadin.tutorial.flow.layout.applayout.vaadin.services.flow;
 
 import static com.vaadin.tutorial.flow.layout.applayout.vaadin.views.login.LoginViewOO.NAV_LOGIN_VIEW;
+import static java.lang.System.setProperty;
 
+import com.vaadin.flow.i18n.I18NProvider;
+import com.vaadin.tutorial.flow.layout.applayout.vaadin.services.I18NProviderImpl;
 import org.rapidpm.dependencies.core.logger.HasLogger;
 import org.rapidpm.frp.model.Result;
 import com.vaadin.tutorial.flow.layout.applayout.vaadin.services.SecurityService;
@@ -18,6 +21,8 @@ public class ApplicationServiceInitListener implements VaadinServiceInitListener
 
   @Override
   public void serviceInit(ServiceInitEvent e) {
+
+    setProperty("vaadin.i18n.provider", I18NProviderImpl.class.getName());
 
     e.getSource()
      .addUIInitListener((UIInitListener) uiInitEvent -> {

@@ -11,22 +11,23 @@ import com.vaadin.tutorial.flow.layout.applayout.vaadin.views.main.MainView;
 import junit.com.vaadin.tutorial.flow.ServletContainerExtension;
 import junit.com.vaadin.tutorial.flow.WebDriverParameterResolver;
 import junit.com.vaadin.tutorial.flow.WebdriverExtension;
+import junit.com.vaadin.tutorial.flow.layout.VaadinTutorial;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.rapidpm.dependencies.core.logger.HasLogger;
 
-@ExtendWith(ServletContainerExtension.class)
-@ExtendWith(WebdriverExtension.class)
-@ExtendWith(WebDriverParameterResolver.class)
+@VaadinTutorial
 public class LoginViewTest
     implements HasLogger {
 
   private final TestBenchTestCase testCase = new TestBenchTestCase() { };
 
   @Test
-//  @Disabled
   void test001(WebDriverParameterResolver.WebDriverInfo webDriverInfo) {
     logger().info("webDriverInfo = " + webDriverInfo.getVncAdress());
 

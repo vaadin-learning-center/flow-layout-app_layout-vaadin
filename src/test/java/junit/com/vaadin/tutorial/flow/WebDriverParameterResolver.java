@@ -1,10 +1,18 @@
 package junit.com.vaadin.tutorial.flow;
 
+import com.vaadin.testbench.ElementQuery;
+import com.vaadin.testbench.TestBenchElement;
+import com.vaadin.testbench.TestBenchTestCase;
+import com.vaadin.testbench.commands.TestBenchCommandExecutor;
+import com.vaadin.testbench.commands.TestBenchCommands;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.rapidpm.frp.Transformations;
 import org.rapidpm.frp.functions.CheckedPredicate;
 import org.rapidpm.frp.functions.CheckedSupplier;
@@ -15,6 +23,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.GLOBAL;
@@ -30,7 +40,7 @@ public class WebDriverParameterResolver
       throws ParameterResolutionException {
     final Class<?> type = parameterContext.getParameter()
                                           .getType();
-    return WebDriverInfo.class.isAssignableFrom(type);
+    return GenericPageObject.class.isAssignableFrom(type);
   }
 
   @Override
@@ -50,22 +60,23 @@ public class WebDriverParameterResolver
 //                                                       : localeIP().get(), container.getVncAddress());
 
 
-    return new WebDriverInfo(container.getWebDriver(), localeIP().get(), container.getVncAddress());
+    return new GenericPageObject(container.getWebDriver(), localeIP().get(), container.getVncAddress());
   }
 
-  public static class WebDriverInfo {
-    private WebDriver webdriver;
-    private String    hostIpAddress;
-    private String    vncAdress;
+  public static class GenericPageObject {
+//    private WebDriver         webdriver;
+    private String            hostIpAddress;
+    private String            vncAdress;
+    final   TestBenchTestCase testCase = new TestBenchTestCase() { };
 
-    public WebDriverInfo(WebDriver webdriver, String hostIpAddress, String vncAdress) {
-      this.webdriver     = webdriver;
+    public GenericPageObject(WebDriver webdriver, String hostIpAddress, String vncAdress) {
+      this.testCase.setDriver(webdriver);
       this.hostIpAddress = hostIpAddress;
       this.vncAdress     = vncAdress;
     }
 
     public WebDriver getWebdriver() {
-      return webdriver;
+      return testCase.getDriver();
     }
 
     public String getHostIpAddress() {
@@ -74,6 +85,82 @@ public class WebDriverParameterResolver
 
     public String getVncAdress() {
       return vncAdress;
+    }
+
+    public TestBenchCommands testBench() {
+      return testCase.testBench();
+    }
+
+    public SearchContext getContext() {
+      return testCase.getContext();
+    }
+
+    public TestBenchCommandExecutor getCommandExecutor() {
+      return testCase.getCommandExecutor();
+    }
+
+    public WebElement findElement(By by) {
+      return testCase.findElement(by);
+    }
+
+    public List<WebElement> findElements(By by) {
+      return testCase.findElements(by);
+    }
+
+    public <T extends TestBenchElement> T wrap(Class<T> elementType, WebElement element) {
+      return testCase.wrap(elementType, element);
+    }
+
+    public <T extends TestBenchElement> ElementQuery<T> $(Class<T> clazz) {
+      return testCase.$(clazz);
+    }
+
+    public ElementQuery<TestBenchElement> $(String tagName) {
+      return testCase.$(tagName);
+    }
+
+    public void load(String url) {
+      getWebdriver().get(url);
+    }
+
+    public String getCurrentUrl() {
+      return getWebdriver().getCurrentUrl();
+    }
+
+    public String getTitle() {
+      return getWebdriver().getTitle();
+    }
+
+    public String getPageSource() {
+      return getWebdriver().getPageSource();
+    }
+
+    public void close() {
+      getWebdriver().close();
+    }
+
+    public void quit() {
+      getWebdriver().quit();
+    }
+
+    public Set<String> getWindowHandles() {
+      return getWebdriver().getWindowHandles();
+    }
+
+    public String getWindowHandle() {
+      return getWebdriver().getWindowHandle();
+    }
+
+    public WebDriver.TargetLocator switchTo() {
+      return getWebdriver().switchTo();
+    }
+
+    public WebDriver.Navigation navigate() {
+      return getWebdriver().navigate();
+    }
+
+    public WebDriver.Options manage() {
+      return getWebdriver().manage();
     }
   }
 

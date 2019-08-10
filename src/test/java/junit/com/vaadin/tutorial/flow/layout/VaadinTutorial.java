@@ -15,5 +15,5 @@ import java.lang.annotation.*;
 @ExtendWith(ServletContainerExtension.class)
 @ExtendWith(WebdriverExtension.class)
 @ExtendWith(WebDriverParameterResolver.class)
-@EnabledIfEnvironmentVariable(named = "TESTBENCH", matches = "on") //in default annotation
+@EnabledIfEnvironmentVariable(named = "TESTBENCH", matches = "on")
 public @interface VaadinTutorial { }

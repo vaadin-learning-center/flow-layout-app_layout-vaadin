@@ -25,7 +25,7 @@
     <artifactId>vaadin-dependencies-v14</artifactId>
     <!--    latest version you could fine here:-->
     <!--    https://jitpack.io/#vaadin-learning-center/vaadin-dependencies/-->
-    <version>fd8e29fa</version>
+    <version>222bcc63</version>
   </parent>
 
   <groupId>com.vaadin.tutorial</groupId>
